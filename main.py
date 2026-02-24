@@ -7,8 +7,8 @@ def menu():
     while True:
         print("\n--- MENÚ INVENTARIO ---")
         print("1. Agregar producto")
-        print("2. Eliminar producto")
-        print("3. Actualizar producto")
+        print("2. Eliminar producto por ID")
+        print("3. Actualizar cantidad o precio")
         print("4. Buscar por nombre")
         print("5. Mostrar todo")
         print("0. Salir")
@@ -16,28 +16,31 @@ def menu():
         op = input("Opción: ").strip()
 
         if op == "1":
-            pid = input("ID: ")
-            nombre = input("Nombre: ")
-            cantidad = input("Cantidad: ")
-            precio = input("Precio: ")
-            inv.agregar(Producto(pid, nombre, cantidad, precio))
+            try:
+                pid = input("ID: ").strip()
+                nombre = input("Nombre: ").strip()
+                cantidad = input("Cantidad: ").strip()
+                precio = input("Precio: ").strip()
+                inv.agregar(Producto(pid, nombre, cantidad, precio))
+            except Exception as e:
+                print("No se pudo agregar:", e)
 
         elif op == "2":
-            pid = input("ID a eliminar: ")
+            pid = input("ID a eliminar: ").strip()
             inv.eliminar(pid)
 
         elif op == "3":
-            pid = input("ID a actualizar: ")
+            pid = input("ID a actualizar: ").strip()
             cant = input("Nueva cantidad (enter para no cambiar): ").strip()
             prec = input("Nuevo precio (enter para no cambiar): ").strip()
 
-            nueva_cantidad = None if cant == "" else int(cant)
-            nuevo_precio = None if prec == "" else float(prec)
+            nueva_cantidad = None if cant == "" else cant
+            nuevo_precio = None if prec == "" else prec
 
             inv.actualizar(pid, nueva_cantidad, nuevo_precio)
 
         elif op == "4":
-            nombre = input("Nombre a buscar: ")
+            nombre = input("Nombre a buscar: ").strip()
             encontrados = inv.buscar_por_nombre(nombre)
             if not encontrados:
                 print("No se encontró.")
